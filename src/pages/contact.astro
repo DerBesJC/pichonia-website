@@ -1,0 +1,61 @@
+---
+import Layout from "../layouts/Layout.astro";
+---
+
+<Layout title="Contact — Pichonia">
+  <section class="section grid gap-10 md:grid-cols-2 md:items-start">
+    <!-- LEFT -->
+    <div>
+      <p class="eyebrow">Contact</p>
+      <h1 class="h1 mt-3">Let’s build something real.</h1>
+
+      <p class="lead mt-4">
+        Tell us what you’re building. We’ll reply with a clear plan, timeline, and next steps.
+      </p>
+
+      <div class="mt-8 card-muted">
+        <div class="text-sm text-slate-700 grid gap-2">
+          <div>
+            <span class="font-semibold text-slate-900">Email:</span>
+            <a class="text-[#2158FF] hover:underline" href="mailto:info@pichonia.com">info@pichonia.com</a>
+          </div>
+          <div>
+            <span class="font-semibold text-slate-900">Phone:</span> +1 202-670-7299
+          </div>
+          <div>
+            <span class="font-semibold text-slate-900">HQ:</span> Dover, DE 19901 (United States)
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- RIGHT FORM -->
+    <form class="card grid gap-4" action="mailto:info@pichonia.com" method="post" enctype="text/plain">
+      <label class="grid gap-1 text-sm">
+        <span class="font-semibold">Name</span>
+        <input class="border border-slate-200 rounded-xl px-3 py-2" type="text" name="name" placeholder="Your name" required />
+      </label>
+
+      <label class="grid gap-1 text-sm">
+        <span class="font-semibold">Email</span>
+        <input class="border border-slate-200 rounded-xl px-3 py-2" type="email" name="email" placeholder="you@email.com" required />
+      </label>
+
+      <label class="grid gap-1 text-sm">
+        <span class="font-semibold">Project summary</span>
+        <textarea class="border border-slate-200 rounded-xl px-3 py-2 min-h-[140px]"
+          name="project"
+          placeholder="What do you want to build? Who is it for? When do you want to launch?"
+          required></textarea>
+      </label>
+
+      <button type="submit" class="btn-primary">
+        Send message
+      </button>
+
+      <p class="text-xs text-slate-500">
+        (Temporary mailto form. Next phase we’ll wire Cloudflare Forms for real submissions.)
+      </p>
+    </form>
+  </section>
+</Layout>

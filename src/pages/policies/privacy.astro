@@ -1,0 +1,50 @@
+---
+import Layout from "../../layouts/Layout.astro";
+
+const pageTitle = "Privacy Policy — Pichonia";
+const pageDescription = "Privacy policies for Pichonia products.";
+
+/**
+ * Published policy base domain (GitHub Pages policies repo).
+ * These are the canonical live policies.
+ */
+const POLICY_BASE = "https://policies.pichonia.com";
+
+const DROPT_PRIVACY_URL = `${POLICY_BASE}/logistics/privacy_policy`;
+const DERBEST_PRIVACY_URL = `${POLICY_BASE}/trading_ai/privacy_policy`;
+---
+
+<Layout title={pageTitle} description={pageDescription}>
+  <section class="section">
+    <div class="eyebrow">Policies</div>
+    <h1 class="h1 mt-2">Privacy Policy</h1>
+    <p class="lead mt-3 max-w-2xl">
+      Choose the policy for the product you’re using.
+    </p>
+
+    <div class="mt-8 grid gap-4 md:grid-cols-2">
+      <a href={DROPT_PRIVACY_URL} class="card hover:border-slate-200 transition-colors">
+        <div class="font-semibold">Dropt — Logistics Marketplace</div>
+        <p class="mt-2 text-sm text-slate-600">
+          Applies to the Dropt mobile app and logistics marketplace services.
+        </p>
+        <div class="mt-4 text-sm font-semibold text-[#2158FF]">Read Dropt privacy policy →</div>
+      </a>
+
+      <a href={DERBEST_PRIVACY_URL} class="card hover:border-slate-200 transition-colors">
+        <div class="font-semibold">Derbest AI — Market Prediction</div>
+        <p class="mt-2 text-sm text-slate-600">
+          Applies to Derbest AI trading/prediction products and related services.
+        </p>
+        <div class="mt-4 text-sm font-semibold text-[#2158FF]">Read Derbest AI privacy policy →</div>
+      </a>
+    </div>
+
+    <div class="mt-10 text-sm text-slate-600">
+      Questions? Email
+      <a href="mailto:privacy@pichonia.com" class="font-semibold hover:underline">
+        privacy@pichonia.com
+      </a>.
+    </div>
+  </section>
+</Layout>

@@ -1,16 +1,266 @@
 ---
+import Layout from "../layouts/Layout.astro";
 
+const pageTitle = "Pichonia — From idea to launch, and beyond.";
+const pageDescription =
+  "We design, build, and maintain real apps and AI systems for companies, founders, and everyday users.";
 ---
 
-<html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<meta name="viewport" content="width=device-width" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Astro</title>
-	</head>
-	<body>
-		<h1>Astro</h1>
-	</body>
-</html>
+<Layout title={pageTitle} description={pageDescription}>
+<!-- HERO (full-bleed band) -->
+<section class="hero-grid w-full">
+  <div class="mx-auto max-w-7xl px-6 pt-16 pb-12 grid gap-10 md:grid-cols-5 md:items-center">
+
+    <!-- Left (2/5 width) -->
+    <div class="md:col-span-2">
+      <p class="inline-flex items-center rounded-full bg-slate-100 px-3 py-1 text-xs font-semibold text-slate-700">
+        Pichonia LLC
+      </p>
+
+      <h1 class="mt-4 text-4xl md:text-5xl font-bold tracking-tight text-slate-900">
+        From idea to launch — and beyond.
+      </h1>
+
+      <p class="mt-4 text-lg text-slate-600">
+        Pichonia builds practical apps and AI systems that ship.
+        We design, develop, and maintain real products for clients — and for ourselves.
+      </p>
+
+      <div class="mt-6 flex flex-wrap gap-3">
+        <a href="/contact" class="btn-primary">Start a project</a>
+        <a href="/products" class="btn-secondary">See our products</a>
+      </div>
+    </div>
+
+    <!-- Right / Flagship (3/5 width) -->
+    <div class="md:col-span-3 rounded-2xl border border-slate-100 bg-slate-50 p-6 w-full h-full md:self-stretch">
+      <div class="text-sm font-semibold text-slate-700">Flagship products</div>
+
+      <div class="mt-4 grid gap-4">
+        <div class="rounded-xl bg-white p-4 border border-slate-100 product-card">
+          <div class="flex items-center gap-2 font-semibold">
+            <span class="product-dot" aria-hidden="true"></span>
+            Dropt
+          </div>
+          <p class="mt-1 text-sm text-slate-600">
+            Uber for trucks — a marketplace where truck owners list vehicles and drivers,
+            and customers request nearby trucks for short or long-distance jobs.
+          </p>
+        </div>
+
+        <div class="rounded-xl bg-white p-4 border border-slate-100 ai-card">
+          <div class="flex items-center gap-2 font-semibold">
+            <span class="ai-dot" aria-hidden="true"></span>
+            Derbest AI
+          </div>
+          <p class="mt-1 text-sm text-slate-600">
+            Options-focused market prediction AI that analyzes conditions and surfaces
+            high-probability trades designed to maximize profit.
+          </p>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+	<!-- PROOF (real only) -->
+  <section class="section-tight pt-6">
+    <div class="card-muted flex flex-col md:flex-row md:items-center md:justify-between gap-6">
+      <div>
+        <div class="eyebrow">Proof in production</div>
+        <p class="mt-2 text-sm text-slate-600">
+          We don’t just consult — we build and operate real products. That’s the standard we bring to clients.
+        </p>
+      </div>
+
+      <div class="flex flex-wrap gap-2">
+        <span class="rounded-lg bg-white border border-slate-100 px-3 py-2 text-xs font-semibold text-slate-900">
+          Dropt — Logistics Marketplace
+        </span>
+        <span class="rounded-lg bg-white border border-slate-100 px-3 py-2 text-xs font-semibold text-slate-900">
+          Derbest AI — Market Prediction
+        </span>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- STATS -->
+  <section class="section-tight">
+    <div class="grid gap-4 md:grid-cols-3">
+      <div class="card text-center">
+        <div class="text-3xl font-bold">2</div>
+        <div class="mt-1 text-sm text-slate-600">Flagship products live</div>
+      </div>
+      <div class="card text-center">
+        <div class="text-3xl font-bold">MVP → Scale</div>
+        <div class="mt-1 text-sm text-slate-600">Full product lifecycle</div>
+      </div>
+      <div class="card text-center">
+        <div class="text-3xl font-bold">Weekly</div>
+        <div class="mt-1 text-sm text-slate-600">Demos & iteration cadence</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- INDUSTRIES / FOCUS -->
+  <section class="section">
+    <h2 class="h2">Who we build for</h2>
+    <p class="lead mt-3 max-w-2xl">
+      Startups, small businesses, and teams that need reliable execution for real users.
+    </p>
+
+    <div class="mt-8 grid gap-4 md:grid-cols-4">
+      <div class="card">
+        <div class="font-semibold">Logistics & Mobility</div>
+        <p class="mt-2 text-sm text-slate-600">Marketplaces, dispatch, routing, tracking.</p>
+      </div>
+      <div class="card">
+        <div class="font-semibold">Fintech & Trading</div>
+        <p class="mt-2 text-sm text-slate-600">Prediction, analytics, risk-aware tooling.</p>
+      </div>
+      <div class="card">
+        <div class="font-semibold">Consumer Apps</div>
+        <p class="mt-2 text-sm text-slate-600">Mobile-first products people use daily.</p>
+      </div>
+      <div class="card">
+        <div class="font-semibold">Internal Tools</div>
+        <p class="mt-2 text-sm text-slate-600">Dashboards, admin panels, automation.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- FEATURED CASE STUDIES -->
+  <section class="section-tight">
+    <div class="flex items-end justify-between gap-4">
+      <div>
+        <h2 class="h2">Featured work</h2>
+        <p class="mt-2 text-sm text-slate-600">
+          Two examples of how we turn complex problems into shipped products.
+        </p>
+      </div>
+      <a href="/products" class="text-sm font-semibold text-[#2158FF] hover:underline">
+        See all products →
+      </a>
+    </div>
+
+    <div class="mt-6 grid gap-6 md:grid-cols-2">
+      <article class="card">
+        <div class="eyebrow">Logistics Marketplace</div>
+        <h3 class="mt-2 text-xl font-bold">Dropt</h3>
+        <p class="mt-3 text-slate-600 leading-relaxed">
+          A real-time marketplace that connects customers with nearby trucks,
+          enabling fast short or long-distance delivery requests.
+        </p>
+        <ul class="list">
+          <li>Nearby truck discovery + dispatch</li>
+          <li>Owner/driver assignment system</li>
+          <li>Tracking + reliability signals</li>
+        </ul>
+        <div class="mt-5">
+          <a href="/products#dropt" class="text-sm font-semibold text-[#2158FF] hover:underline">
+            View case →
+          </a>
+        </div>
+      </article>
+
+      <article class="card">
+        <div class="eyebrow">Market Prediction AI</div>
+        <h3 class="mt-2 text-xl font-bold">Derbest AI</h3>
+        <p class="mt-3 text-slate-600 leading-relaxed">
+          Options prediction AI that analyzes volatility and regimes to surface
+          high-probability trades with clear risk framing.
+        </p>
+        <ul class="list">
+          <li>Regime + volatility analysis</li>
+          <li>Structured trade signals</li>
+          <li>Actionable outputs</li>
+        </ul>
+        <div class="mt-5">
+          <a href="/products#derbest" class="text-sm font-semibold text-[#2158FF] hover:underline">
+            View case →
+          </a>
+        </div>
+      </article>
+    </div>
+  </section>
+
+    <!-- WHAT WE DO -->
+  <section class="section-tight">
+    <h2 class="text-2xl font-bold tracking-tight">What we do</h2>
+
+    <div class="mt-6 grid gap-4 md:grid-cols-3">
+      <div class="rounded-2xl border border-slate-100 p-5">
+        <div class="font-semibold">AI Solutions</div>
+        <p class="mt-2 text-sm text-slate-600">
+          LLM apps, automation, forecasting, and domain-specific AI systems that solve real problems.
+        </p>
+      </div>
+
+      <div class="rounded-2xl border border-slate-100 p-5">
+        <div class="font-semibold">Mobile & Web Apps</div>
+        <p class="mt-2 text-sm text-slate-600">
+          MVP to scale: product design, engineering, releases, and platform support.
+        </p>
+      </div>
+
+      <div class="rounded-2xl border border-slate-100 p-5">
+        <div class="font-semibold">Maintenance & Growth</div>
+        <p class="mt-2 text-sm text-slate-600">
+          We keep products reliable, fast, and improving — after launch.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- WHY PICHONIA -->
+  <section class="w-full bg-[#0B1220] py-12">
+	<div class="mx-auto max-w-7xl px-6">
+		<div class="rounded-2xl text-white p-8 md:p-10 grid gap-6 md:grid-cols-3">
+      <div>
+        <div class="text-lg font-semibold">We build what we sell.</div>
+        <p class="mt-2 text-sm text-white/80">
+          Dropt and Derbest AI are real products — not demos.
+        </p>
+      </div>
+      <div>
+        <div class="text-lg font-semibold">End-to-end delivery.</div>
+        <p class="mt-2 text-sm text-white/80">
+          Design → build → deploy → maintain. One team.
+        </p>
+      </div>
+      <div>
+        <div class="text-lg font-semibold">Practical over hype.</div>
+        <p class="mt-2 text-sm text-white/80">
+          We focus on outcomes and usable software.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="mx-auto max-w-6xl px-4 py-14">
+    <div class="rounded-2xl border border-slate-100 bg-slate-50 p-8 md:p-10 flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+      <div>
+        <div class="text-xl font-bold">Bring us your idea.</div>
+        <p class="mt-1 text-sm text-slate-600">
+          Whether it’s an app, an AI system, or a full platform — we’ll design, build, launch, and keep improving it long after release.
+        </p>
+        <p class="mt-2 text-xs text-slate-500">
+          Proven in production through products like Dropt and Derbest AI.
+        </p>
+      </div>
+
+      <div class="flex flex-col sm:flex-row gap-2 w-full sm:w-auto">
+		<a href="/contact" class="btn-primary w-full sm:w-auto text-center">
+			Start a project
+		</a>
+		<a href="/products" class="btn-secondary w-full sm:w-auto text-center">
+			See product proof
+		</a>
+		</div>
+      </div>
+    </div>
+  </section>
+</Layout>

@@ -1,0 +1,50 @@
+---
+import Layout from "../../layouts/Layout.astro";
+
+const pageTitle = "Terms of Service — Pichonia";
+const pageDescription = "Terms of service for Pichonia products.";
+
+/**
+ * Published policy base domain (GitHub Pages policies repo).
+ * These are the canonical live policies.
+ */
+const POLICY_BASE = "https://policies.pichonia.com";
+
+const DROPT_TERMS_URL = `${POLICY_BASE}/logistics/terms_of_service`;
+const DERBEST_TERMS_URL = `${POLICY_BASE}/trading_ai/terms_of_service`;
+---
+
+<Layout title={pageTitle} description={pageDescription}>
+  <section class="section">
+    <div class="eyebrow">Policies</div>
+    <h1 class="h1 mt-2">Terms of Service</h1>
+    <p class="lead mt-3 max-w-2xl">
+      Choose the terms for the product you’re using.
+    </p>
+
+    <div class="mt-8 grid gap-4 md:grid-cols-2">
+      <a href={DROPT_TERMS_URL} class="card hover:border-slate-200 transition-colors">
+        <div class="font-semibold">Dropt — Logistics Marketplace</div>
+        <p class="mt-2 text-sm text-slate-600">
+          Terms governing the Dropt app and logistics services.
+        </p>
+        <div class="mt-4 text-sm font-semibold text-[#2158FF]">Read Dropt terms →</div>
+      </a>
+
+      <a href={DERBEST_TERMS_URL} class="card hover:border-slate-200 transition-colors">
+        <div class="font-semibold">Derbest AI — Market Prediction</div>
+        <p class="mt-2 text-sm text-slate-600">
+          Terms governing Derbest AI products and trading tools.
+        </p>
+        <div class="mt-4 text-sm font-semibold text-[#2158FF]">Read Derbest AI terms →</div>
+      </a>
+    </div>
+
+    <div class="mt-10 text-sm text-slate-600">
+      Questions? Email
+      <a href="mailto:support@pichonia.com" class="font-semibold hover:underline">
+        support@pichonia.com
+      </a>.
+    </div>
+  </section>
+</Layout>
