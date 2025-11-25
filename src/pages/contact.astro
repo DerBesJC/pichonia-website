@@ -10,52 +10,160 @@ import Layout from "../layouts/Layout.astro";
       <h1 class="h1 mt-3">Let’s build something real.</h1>
 
       <p class="lead mt-4">
-        Tell us what you’re building. We’ll reply with a clear plan, timeline, and next steps.
+        Bring us any idea — an app, AI system, internal tool, or full platform.
+        We’ll scope it, ship it, and support it long after launch.
       </p>
 
       <div class="mt-8 card-muted">
         <div class="text-sm text-slate-700 grid gap-2">
           <div>
             <span class="font-semibold text-slate-900">Email:</span>
-            <a class="text-[#2158FF] hover:underline" href="mailto:info@pichonia.com">info@pichonia.com</a>
+            <a
+              class="text-[#2158FF] hover:underline"
+              href="mailto:info@pichonia.com"
+            >
+              info@pichonia.com
+            </a>
           </div>
           <div>
-            <span class="font-semibold text-slate-900">Phone:</span> +1 202-670-7299
+            <span class="font-semibold text-slate-900">Phone:</span>
+            +1 202-670-7299
           </div>
           <div>
-            <span class="font-semibold text-slate-900">HQ:</span> Dover, DE 19901 (United States)
+            <span class="font-semibold text-slate-900">HQ:</span>
+            Dover, DE 19901 (United States)
           </div>
         </div>
       </div>
     </div>
 
-    <!-- RIGHT FORM -->
-    <form class="card grid gap-4" action="mailto:info@pichonia.com" method="post" enctype="text/plain">
+    <!-- RIGHT FORM (real submissions) -->
+    <form
+      id="contact-form"
+      action="/api/contact"
+      method="POST"
+      class="card grid gap-4"
+    >
+      <!-- Honeypot (bots fill this, humans won't) -->
+      <label class="hidden">
+        Website
+        <input
+          type="text"
+          name="website"
+          tabindex="-1"
+          autocomplete="off"
+        />
+      </label>
+
       <label class="grid gap-1 text-sm">
         <span class="font-semibold">Name</span>
-        <input class="border border-slate-200 rounded-xl px-3 py-2" type="text" name="name" placeholder="Your name" required />
+        <input
+          class="border border-slate-200 rounded-xl px-3 py-2"
+          type="text"
+          name="name"
+          placeholder="Your name"
+          required
+        />
       </label>
 
       <label class="grid gap-1 text-sm">
         <span class="font-semibold">Email</span>
-        <input class="border border-slate-200 rounded-xl px-3 py-2" type="email" name="email" placeholder="you@email.com" required />
+        <input
+          class="border border-slate-200 rounded-xl px-3 py-2"
+          type="email"
+          name="email"
+          placeholder="you@email.com"
+          required
+        />
       </label>
 
       <label class="grid gap-1 text-sm">
-        <span class="font-semibold">Project summary</span>
-        <textarea class="border border-slate-200 rounded-xl px-3 py-2 min-h-[140px]"
-          name="project"
-          placeholder="What do you want to build? Who is it for? When do you want to launch?"
-          required></textarea>
+        <span class="font-semibold">Company (optional)</span>
+        <input
+          class="border border-slate-200 rounded-xl px-3 py-2"
+          type="text"
+          name="company"
+          placeholder="Company name"
+        />
       </label>
 
-      <button type="submit" class="btn-primary">
-        Send message
-      </button>
+      <label class="grid gap-1 text-sm">
+        <span class="font-semibold">Phone (optional)</span>
+        <input
+          class="border border-slate-200 rounded-xl px-3 py-2"
+          type="tel"
+          name="phone"
+          placeholder="+1 ..."
+        />
+      </label>
+
+      <label class="grid gap-1 text-sm">
+        <span class="font-semibold">Message</span>
+        <textarea
+          class="border border-slate-200 rounded-xl px-3 py-2 min-h-[160px]"
+          name="message"
+          placeholder="What do you want to build? Who is it for? When do you want to launch?"
+          required
+        ></textarea>
+      </label>
+
+      <div class="flex items-center gap-3">
+        <button id="contact-submit" type="submit" class="btn-primary">
+          Send message
+        </button>
+
+        <p
+          id="form-status"
+          class="text-sm text-slate-600"
+          aria-live="polite"
+        ></p>
+      </div>
 
       <p class="text-xs text-slate-500">
-        (Temporary mailto form. Next phase we’ll wire Cloudflare Forms for real submissions.)
+        We respond within 1–2 business days. Your details stay private.
       </p>
     </form>
+
+    <!-- Progressive enhancement: keep form working if JS is off -->
+    <script is:inline>
+      const form = document.getElementById("contact-form");
+      const statusEl = document.getElementById("form-status");
+      const submitBtn = document.getElementById("contact-submit");
+
+      form?.addEventListener("submit", async (e) => {
+        e.preventDefault();
+        statusEl.textContent = "Sending…";
+        submitBtn?.setAttribute("disabled", "true");
+        submitBtn?.classList.add("opacity-70", "cursor-not-allowed");
+
+        const formData = new FormData(form);
+
+        try {
+          const resp = await fetch(form.action, {
+            method: "POST",
+            body: formData,
+          });
+
+          let data = null;
+          try {
+            data = await resp.json();
+          } catch (_) {}
+
+          if (resp.ok && data?.ok) {
+            form.reset();
+            statusEl.textContent = "Message sent. We’ll reply soon.";
+          } else {
+            statusEl.textContent =
+              "Something went wrong. Try again or email info@pichonia.com.";
+          }
+        } catch (err) {
+          statusEl.textContent =
+            "Network error. Try again or email info@pichonia.com.";
+        } finally {
+          submitBtn?.removeAttribute("disabled");
+          submitBtn?.classList.remove("opacity-70", "cursor-not-allowed");
+        }
+      });
+    </script>
   </section>
 </Layout>

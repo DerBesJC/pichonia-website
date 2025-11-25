@@ -1,0 +1,6 @@
+name = "pichonia-website"
+compatibility_date = "2025-11-23"
+pages_build_output_dir = "dist"
+
+# Optional, but nice if you start using Pages build output explicitly:
+# pages_build_output_dir = "dist"
