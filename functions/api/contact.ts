@@ -13,9 +13,11 @@ export const onRequestPost = async (context: any) => {
     const phone = String(form.get("phone") || "").trim();
 
     // Honeypot (bots fill this; humans won’t)
+    // If filled, treat as spam: do NOT send email. Return ok:false (200) to avoid training bots.
     const honey = String(form.get("website") || "").trim();
     if (honey) {
-      return new Response(JSON.stringify({ ok: true }), {
+      return new Response(JSON.stringify({ ok: false, error: "honeypot_triggered" }), {
+        status: 200,
         headers: { "content-type": "application/json" },
       });
     }
@@ -23,6 +25,14 @@ export const onRequestPost = async (context: any) => {
     if (!name || !email || !message) {
       return new Response(
         JSON.stringify({ ok: false, error: "Missing required fields." }),
+        { status: 400, headers: { "content-type": "application/json" } }
+      );
+    }
+
+    // (Optional) basic email sanity check
+    if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)) {
+      return new Response(
+        JSON.stringify({ ok: false, error: "invalid_email" }),
         { status: 400, headers: { "content-type": "application/json" } }
       );
     }
@@ -87,7 +97,7 @@ export const onRequestPost = async (context: any) => {
     return new Response(JSON.stringify({ ok: true }), {
       headers: { "content-type": "application/json" },
     });
-  } catch (err: any) {
+  } catch (_err: any) {
     return new Response(
       JSON.stringify({ ok: false, error: "Unexpected error." }),
       { status: 500, headers: { "content-type": "application/json" } }
