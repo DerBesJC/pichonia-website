@@ -1,133 +1,113 @@
 ---
 import Layout from "../layouts/Layout.astro";
+import { getCollection } from "astro:content";
 
-const pageTitle = "Services — Pichonia";
-const pageDescription =
-  "AI solutions, mobile & web apps, and long-term product maintenance. From idea to launch — and beyond.";
+// Policy links (kept from your original file)
+const policies = [
+  { name: "Company policies", url: "https://policies.pichonia.com/" },
+  { name: "Dropt (logistics)", url: "https://policies.pichonia.com/logistics/" },
+  { name: "Derbest AI (markets)", url: "https://policies.pichonia.com/trading_ai/" },
+];
+
+// Load all "messaging" entries from src/content/messaging/*
+const allEntries = await getCollection("messaging");
+
+// Fail fast if any entry is missing required fields
+for (const entry of allEntries) {
+  if (!entry.data?.title) {
+    throw new Error(
+      `Messaging content missing "title" in frontmatter: src/content/messaging/${entry.slug}.md`
+    );
+  }
+}
+
+// Normalize + sort by optional `order` frontmatter
+const ordered = allEntries
+  .map((entry) => ({
+    ...entry,
+    ord: typeof entry.data.order === "number" ? entry.data.order : 999,
+  }))
+  .sort((a, b) => a.ord - b.ord);
+
+// Pre-render markdown so we can use <Content /> components
+const rendered = await Promise.all(
+  ordered.map(async (entry) => {
+    const out = await entry.render();
+    return { entry, Content: out.Content };
+  })
+);
+
+// Helper to build stable section IDs from titles
+function sectionId(title) {
+  return String(title)
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/(^-|-$)/g, "");
+}
 ---
 
-<Layout title={pageTitle} description={pageDescription}>
-  <!-- HERO -->
-  <section class="section">
-    <p class="eyebrow">Consulting / Studio</p>
-    <h1 class="h1 mt-3">Services</h1>
-    <p class="lead mt-4 max-w-2xl">
-      We partner with founders and teams to design, build, and maintain products that ship.
-      Whether it’s an app, an AI system, or a full platform — we deliver end-to-end.
-    </p>
-  </section>
 
-  <!-- SERVICE CARDS -->
-  <section class="section-tight">
-    <div class="grid gap-6 md:grid-cols-3">
-      <div class="card">
-        <div class="flex items-center gap-2">
-          <span class="h-2 w-2 rounded-full bg-[#2158FF]"></span>
-          <div class="text-lg font-semibold">AI Solutions</div>
-        </div>
-        <p class="mt-3 text-sm text-slate-600 leading-relaxed">
-          LLM products, automation, forecasting, and domain-specific AI systems.
-          We turn messy data and workflows into clear outcomes.
-        </p>
-        <ul class="list">
-          <li>LLM apps & copilots</li>
-          <li>Prediction & optimization</li>
-          <li>Workflow automation</li>
-          <li>Custom AI integrations</li>
-        </ul>
-      </div>
+<Layout title="Services — Pichonia">
+  <main class="mx-auto max-w-3xl px-4 py-10">
+    <h1 class="text-3xl font-bold mb-6">Services</h1>
 
-      <div class="card">
-        <div class="flex items-center gap-2">
-          <span class="h-2 w-2 rounded-full bg-[#2158FF]"></span>
-          <div class="text-lg font-semibold">Mobile & Web Apps</div>
-        </div>
-        <p class="mt-3 text-sm text-slate-600 leading-relaxed">
-          MVPs, marketplaces, dashboards, and consumer apps — designed for speed and scale.
-        </p>
-        <ul class="list">
-          <li>iOS / Android / cross-platform</li>
-          <li>Web platforms & admin panels</li>
-          <li>Payments, maps, realtime, auth</li>
-          <li>App store / Play store launch</li>
-        </ul>
-      </div>
+    <!-- Top-of-page jump links built from content titles -->
+    <nav class="mb-8 text-sm">
+      <ul class="flex flex-wrap gap-3">
+        {rendered.map(({ entry }) => (
+          <li>
+            <a
+              href={`#${sectionId(entry.data.title)}`}
+              class="underline"
+            >
+              {entry.data.title}
+            </a>
+          </li>
+        ))}
+      </ul>
+    </nav>
 
-      <div class="card">
-        <div class="flex items-center gap-2">
-          <span class="h-2 w-2 rounded-full bg-[#2158FF]"></span>
-          <div class="text-lg font-semibold">Maintenance & Growth</div>
-        </div>
-        <p class="mt-3 text-sm text-slate-600 leading-relaxed">
-          After launch, we keep products reliable, fast, and improving.
-        </p>
-        <ul class="list">
-          <li>Monitoring & uptime</li>
-          <li>Performance tuning</li>
-          <li>Feature roadmap support</li>
-          <li>Security & compliance updates</li>
-        </ul>
-      </div>
-    </div>
-  </section>
+    <!-- One section per messaging doc (About, Services, Capabilities, etc.) -->
+    {rendered.map(({ entry, Content }) => (
+      <section
+        id={sectionId(entry.data.title)}
+        class="prose prose-neutral max-w-none mb-12"
+        data-slug={entry.slug}
+      >
+        <h2 class="text-2xl font-semibold mb-3">
+          {entry.data.title}
+        </h2>
+        <Content />
+      </section>
+    ))}
 
-  <!-- HOW WE WORK -->
-  <section class="section">
-    <h2 class="h2">How we work</h2>
+    <!-- Policy links (same intent as your original page) -->
+    <section class="prose prose-neutral max-w-none mb-8">
+      <h2 class="text-2xl font-semibold mb-3">Policy Links</h2>
+      <ul class="list-disc pl-5">
+        {policies.map((p) => (
+          <li>
+            <a href={p.url} rel="noopener noreferrer" class="underline">
+              {p.name}
+            </a>
+          </li>
+        ))}
+      </ul>
+    </section>
 
-    <div class="mt-8 grid gap-6 md:grid-cols-4">
-      <div class="card-muted">
-        <div class="flex items-center gap-3">
-          <div class="h-8 w-8 rounded-full bg-white border border-slate-200 flex items-center justify-center font-bold text-sm">1</div>
-          <div class="font-semibold">Discovery</div>
-        </div>
-        <p class="mt-3 text-sm text-slate-600 leading-relaxed">
-          We clarify scope, users, success metrics, and constraints.
-        </p>
-      </div>
-
-      <div class="card-muted">
-        <div class="flex items-center gap-3">
-          <div class="h-8 w-8 rounded-full bg-white border border-slate-200 flex items-center justify-center font-bold text-sm">2</div>
-          <div class="font-semibold">Design</div>
-        </div>
-        <p class="mt-3 text-sm text-slate-600 leading-relaxed">
-          UX flows, UI mockups, architecture, and a launch plan.
-        </p>
-      </div>
-
-      <div class="card-muted">
-        <div class="flex items-center gap-3">
-          <div class="h-8 w-8 rounded-full bg-white border border-slate-200 flex items-center justify-center font-bold text-sm">3</div>
-          <div class="font-semibold">Build & Launch</div>
-        </div>
-        <p class="mt-3 text-sm text-slate-600 leading-relaxed">
-          Fast iterations, weekly demos, and a clean store / web release.
-        </p>
-      </div>
-
-      <div class="card-muted">
-        <div class="flex items-center gap-3">
-          <div class="h-8 w-8 rounded-full bg-white border border-slate-200 flex items-center justify-center font-bold text-sm">4</div>
-          <div class="font-semibold">Beyond</div>
-        </div>
-        <p class="mt-3 text-sm text-slate-600 leading-relaxed">
-          Maintenance, scaling, analytics, and new features.
-        </p>
-      </div>
-    </div>
-  </section>
-
-  <!-- CTA -->
-  <section class="section-tight pb-20">
-    <div class="card flex flex-col md:flex-row md:items-center md:justify-between gap-4">
-      <div>
-        <div class="text-xl font-bold">Let’s talk about your project.</div>
-        <p class="mt-1 text-sm text-slate-600">
-          We’ll respond with a clear plan, timeline, and next steps.
-        </p>
-      </div>
-      <a href="/contact" class="btn-primary">Book a consult</a>
-    </div>
-  </section>
+    <!-- Simple contact block at the bottom -->
+    <section class="prose prose-neutral max-w-none text-sm text-slate-700">
+      <h2 class="text-xl font-semibold mb-2">Contact</h2>
+      <p>
+        Questions or projects? Email{" "}
+        <a href="mailto:info@pichonia.com" class="underline">
+          info@pichonia.com
+        </a>{" "}
+        or use the{" "}
+        <a href="/contact" class="underline">
+          contact form
+        </a>.
+      </p>
+    </section>
+  </main>
 </Layout>
